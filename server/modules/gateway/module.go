@@ -3,11 +3,11 @@ package gateway
 import (
 	"encoding/json"
 	"errors"
-	"gitee.com/yuanxuezhe/dante/core/log"
-	"gitee.com/yuanxuezhe/dante/core/module"
-	basemodule "gitee.com/yuanxuezhe/dante/core/module/base"
-	"gitee.com/yuanxuezhe/dante/core/module/gateway"
-	. "gitee.com/yuanxuezhe/dante/core/msg"
+	"gitee.com/yuanxuezhe/dante/log"
+	"gitee.com/yuanxuezhe/dante/module"
+	basemodule "gitee.com/yuanxuezhe/dante/module/base"
+	"gitee.com/yuanxuezhe/dante/module/gateway"
+	. "gitee.com/yuanxuezhe/dante/msg"
 	commconn "gitee.com/yuanxuezhe/ynet/Conn"
 )
 

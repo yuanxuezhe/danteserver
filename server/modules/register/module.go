@@ -2,9 +2,9 @@ package register
 
 import (
 	"encoding/json"
-	"gitee.com/yuanxuezhe/dante/core/module"
-	base "gitee.com/yuanxuezhe/dante/core/module/base"
-	"gitee.com/yuanxuezhe/dante/core/module/register"
+	"gitee.com/yuanxuezhe/dante/module"
+	base "gitee.com/yuanxuezhe/dante/module/base"
+	"gitee.com/yuanxuezhe/dante/module/register"
 	"net"
 )
 

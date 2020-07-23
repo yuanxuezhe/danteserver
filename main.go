@@ -7,15 +7,15 @@ import (
 	"danteserver/server/modules/register"
 	_ "danteserver/server/util/pool"
 
-	"gitee.com/yuanxuezhe/dante/core"
-	_ "gitee.com/yuanxuezhe/dante/core/conf"
+	"gitee.com/yuanxuezhe/dante"
+	_ "gitee.com/yuanxuezhe/dante/conf"
 )
 
 func main() {
-	core.AddMod("Gateway", gateway.NewModule)
-	core.AddMod("Register", register.NewModule)
-	core.AddMod("Login", login.NewModule)
-	core.AddMod("Goods", goods.NewModule)
+	dante.AddMod("Gateway", gateway.NewModule)
+	dante.AddMod("Register", register.NewModule)
+	dante.AddMod("Login", login.NewModule)
+	dante.AddMod("Goods", goods.NewModule)
 
-	core.Run()
+	dante.Run()
 }

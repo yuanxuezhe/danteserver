@@ -1,11 +1,11 @@
 package goods
 
 import (
+	"danteserver/server/tables"
 	"encoding/json"
-	"gitee.com/yuanxuezhe/dante/core/module"
-	"gitee.com/yuanxuezhe/dante/core/module/base"
-	. "gitee.com/yuanxuezhe/dante/core/msg"
-	"gitee.com/yuanxuezhe/dante/server/tables"
+	"gitee.com/yuanxuezhe/dante/module"
+	"gitee.com/yuanxuezhe/dante/module/base"
+	. "gitee.com/yuanxuezhe/dante/msg"
 	"sync"
 )
 

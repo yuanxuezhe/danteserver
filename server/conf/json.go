@@ -2,7 +2,7 @@ package conf
 
 import (
 	"encoding/json"
-	"gitee.com/yuanxuezhe/dante/core/log"
+	"gitee.com/yuanxuezhe/dante/log"
 	"io/ioutil"
 )
 

@@ -1,8 +1,8 @@
 package snogenerator
 
 import (
+	"danteserver/server/util/pool"
 	"database/sql"
-	"gitee.com/yuanxuezhe/dante/server/util/pool"
 	"log"
 	"sync"
 )

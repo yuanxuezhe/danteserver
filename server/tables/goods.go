@@ -1,6 +1,7 @@
 package tables
 
 import (
+	. "danteserver/server/util/pool"
 	"database/sql"
 	"errors"
 	"fmt"
