@@ -2,6 +2,9 @@
     "Registermodules": "Register,Login,Gateway,Goods",
     "RegisterProtocol": "tcp",
     "RegisterCentor": "192.168.2.3:9101",
+    "Log": {
+        "LogLevel": "debug"
+    },
 	"Module":{
         "Gateway":[
                     {
@@ -25,8 +28,8 @@
                 "Id":"Register",
                 "Settings":{
                     "TCPAddr":      "192.168.2.3:9101",
-                    "Registduring": 10,
-                    "Register": false
+                    "Registduring": 60,
+                    "Register":     false
                 }
             }
         ],
@@ -36,7 +39,7 @@
                 "Settings":{
                     "TCPAddr":      "192.168.2.3:9201",
                     "Registduring": 30,
-                    "Register": true
+                    "Register":     true
                 }
             }
         ],
@@ -52,7 +55,7 @@
         ]
     },
     "Mysql": {
-        "Url": "root:1@tcp(192.168.2.3:3306)/dante?parseTime=true",
+        "Url": "root:1@tcp(192.168.2.2:3306)/dante?parseTime=true",
         "Maxcount":10
     }
 }
