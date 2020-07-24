@@ -46,5 +46,5 @@ func (m *GoodsManage) DoWork(buff []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	return ResultPackege(m.ModuleType, 0, "Get goodsinfo successful!", data), nil
+	return ResultPackege(m.ModuleType, m.ModuleId, 0, "Get goodsinfo successful!", data), nil
 }

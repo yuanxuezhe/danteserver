@@ -34,11 +34,7 @@ type Goods struct {
 }
 
 func (t *Goods) QueryByKey() error {
-	conn, err := Mysqlpool.Get()
-	if err != nil {
-		return err
-	}
-	err = conn.(*sql.DB).QueryRow("SELECT * FROM goods where goodsid = ?", t.Goodsid).Scan(&t.Goodsid,
+	err := MysqlDb.QueryRow("SELECT * FROM goods where goodsid = ?", t.Goodsid).Scan(&t.Goodsid,
 		&t.Goodsname,
 		&t.Type,
 		&t.Source,
@@ -48,7 +44,6 @@ func (t *Goods) QueryByKey() error {
 		&t.Status,
 		&t.Date,
 		&t.Time)
-	Mysqlpool.Put(conn)
 	if err != nil {
 		return errors.New("Get record from mysql failed!")
 	}
@@ -64,14 +59,9 @@ func (t *Goods) QueryByKey() error {
 }
 
 func (t *Goods) Insert() error {
-	conn, err := Mysqlpool.Get()
-	if err != nil {
-		return err
-	}
-	rs, err := conn.(*sql.DB).Exec("INSERT INTO userinfo(goodsid,goodsname,type,source,url,imgurl,brand,status,date,time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+	rs, err := MysqlDb.Exec("INSERT INTO userinfo(goodsid,goodsname,type,source,url,imgurl,brand,status,date,time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 		t.Goodsid, t.Goodsname, t.Type, t.Source, t.Url, t.Imgurl, t.Brand, t.Status, t.Date, t.Time)
 
-	Mysqlpool.Put(conn)
 	if err != nil {
 		return err
 	}
@@ -85,11 +75,8 @@ func (t *Goods) Insert() error {
 
 func (t *Goods) QueryByStatus() ([]Goods, error) {
 	goodlist := []Goods{}
-	conn, err := Mysqlpool.Get()
-	if err != nil {
-		return nil, err
-	}
-	stmt, err := conn.(*sql.DB).Prepare("SELECT * FROM goods where status = ?")
+
+	stmt, err := MysqlDb.Prepare("SELECT * FROM goods where status = ?")
 	if err != nil {
 		return nil, errors.New("Connection to mysql failed!")
 	}
@@ -99,8 +86,6 @@ func (t *Goods) QueryByStatus() ([]Goods, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	Mysqlpool.Put(conn)
 
 	for rows.Next() {
 		m := Goods{}

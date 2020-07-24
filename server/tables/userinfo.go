@@ -21,11 +21,7 @@ type Userinfo struct {
 }
 
 func (t *Userinfo) QueryByKey() error {
-	conn, err := Mysqlpool.Get()
-	if err != nil {
-		return err
-	}
-	err = conn.(*sql.DB).QueryRow("SELECT * FROM userinfo where userid = ?", t.Userid).Scan(&t.Userid,
+	err := MysqlDb.QueryRow("SELECT * FROM userinfo where userid = ?", t.Userid).Scan(&t.Userid,
 		&t.Username,
 		&t.Passwd,
 		&t.Sex,
@@ -33,7 +29,7 @@ func (t *Userinfo) QueryByKey() error {
 		&t.Email,
 		&t.Status,
 		&t.Registerdate)
-	Mysqlpool.Put(conn)
+
 	if err != nil {
 		return errors.New("Get record from mysql failed!")
 	}
@@ -48,14 +44,9 @@ func (t *Userinfo) QueryByKey() error {
 	return nil
 }
 func (t *Userinfo) Insert() error {
-	conn, err := Mysqlpool.Get()
-	if err != nil {
-		return err
-	}
-	rs, err := conn.(*sql.DB).Exec("INSERT INTO userinfo(userid,username,passwd,sex,phone,email,status,registerdate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+	rs, err := MysqlDb.Exec("INSERT INTO userinfo(userid,username,passwd,sex,phone,email,status,registerdate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 		t.Userid, t.Username, t.Passwd, t.Sex, t.Phone, t.Email, t.Status, t.Registerdate)
 
-	Mysqlpool.Put(conn)
 	if err != nil {
 		return err
 	}
@@ -99,11 +90,7 @@ func (t *Userinfo) Insert() error {
 
 // 校验用户是否存在,若存在返回用户信息
 func (t *Userinfo) CheckAccountExist() (userinfo *Userinfo, err error) {
-	conn, err := Mysqlpool.Get()
-	if err != nil {
-		return nil, err
-	}
-	stmt, err := conn.(*sql.DB).Prepare("SELECT * FROM userinfo where (userid = ? or phone = ? or email = ?) and passwd = ?")
+	stmt, err := MysqlDb.Prepare("SELECT * FROM userinfo where (userid = ? or phone = ? or email = ?) and passwd = ?")
 	if err != nil {
 		return nil, errors.New("Connection to mysql failed!")
 	}
@@ -113,7 +100,6 @@ func (t *Userinfo) CheckAccountExist() (userinfo *Userinfo, err error) {
 		return nil, err
 	}
 	defer rows.Close()
-	Mysqlpool.Put(conn)
 
 	if rows.Next() {
 		err = rows.Scan(&t.Userid,
@@ -136,17 +122,11 @@ func (t *Userinfo) CheckAccountExist() (userinfo *Userinfo, err error) {
 }
 
 func (t *Userinfo) CheckAvailable_Phone() error {
-	var err error
-	conn, err := Mysqlpool.Get()
-	if err != nil {
-		return err
-	}
-	rows, err := conn.(*sql.DB).Query("SELECT * FROM userinfo where phone = ?", t.Phone)
+	rows, err := MysqlDb.Query("SELECT * FROM userinfo where phone = ?", t.Phone)
 	if err != nil {
 		return err
 	}
 	defer rows.Close()
-	Mysqlpool.Put(conn)
 
 	if rows.Next() {
 		return errors.New("phone num has been used!")
@@ -156,17 +136,12 @@ func (t *Userinfo) CheckAvailable_Phone() error {
 }
 
 func (t *Userinfo) CheckAvailable_Email() error {
-	var err error
-	conn, err := Mysqlpool.Get()
-	if err != nil {
-		return err
-	}
-	rows, err := conn.(*sql.DB).Query("SELECT * FROM userinfo where email = ?", t.Email)
+
+	rows, err := MysqlDb.Query("SELECT * FROM userinfo where email = ?", t.Email)
 	if err != nil {
 		return err
 	}
 	defer rows.Close()
-	Mysqlpool.Put(conn)
 
 	if rows.Next() {
 		return errors.New("phone num has been used!")

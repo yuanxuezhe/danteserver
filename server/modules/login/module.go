@@ -67,7 +67,7 @@ func (m *LoginManage) DoWork(buff []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	return ResultPackege(m.ModuleType, 0, m.SetMsgSucc(loginInfo.Type), userinfo), nil
+	return ResultPackege(m.ModuleType, m.ModuleId, 0, m.SetMsgSucc(loginInfo.Type), userinfo), nil
 }
 
 // Check params

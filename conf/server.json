@@ -2,6 +2,11 @@
     "Registermodules": "Register,Login,Gateway,Goods",
     "RegisterProtocol": "tcp",
     "RegisterCentor": "192.168.2.3:9101",
+    "Log": {
+        "LogLevel": "release",
+        "LogPath": "user",
+        "Console": true
+    },
 	"Module":{
         "Gateway":[
                     {
@@ -53,6 +58,7 @@
     },
     "Mysql": {
         "Url": "root:1@tcp(192.168.2.3:3306)/dante?parseTime=true",
-        "Maxcount":10
+        "MaxOpenConns":1,
+        "MaxIdleConns":1
     }
 }

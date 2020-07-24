@@ -36,7 +36,7 @@ func (g *Gateway) DoWork(buff []byte) ([]byte, error) {
 	}
 	module = msg.Id
 	if module == "Heart" {
-		return ResultPackege(module, 0, "Heart beats!", nil), nil
+		return ResultPackege(module, module, 0, "Heart beats!", nil), nil
 	}
 
 	times := 0
