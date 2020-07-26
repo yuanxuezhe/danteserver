@@ -1,7 +1,7 @@
 package snogenerator
 
 import (
-	"danteserver/server/util/pool"
+	"gitee.com/yuanxuezhe/dante/db/mysql"
 	"log"
 	"sync"
 )
@@ -10,8 +10,9 @@ var useridRW sync.RWMutex
 
 func NewUserid() int {
 	var userid int
+	conn := mysql.GetMysqlDB()
 	useridRW.Lock()
-	err := pool.MysqlDb.QueryRow("SELECT max(userid) + 1  FROM userinfo").Scan(&userid)
+	err := conn.QueryRow("SELECT max(userid) + 1  FROM userinfo").Scan(&userid)
 	useridRW.Unlock()
 	if err != nil {
 		log.Fatal(err)

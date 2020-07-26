@@ -1,10 +1,10 @@
 package tables
 
 import (
-	. "danteserver/server/util/pool"
 	"database/sql"
 	"errors"
 	"fmt"
+	"gitee.com/yuanxuezhe/dante/db/mysql"
 	"log"
 	"runtime"
 )
@@ -34,7 +34,8 @@ type Goods struct {
 }
 
 func (t *Goods) QueryByKey() error {
-	err := MysqlDb.QueryRow("SELECT * FROM goods where goodsid = ?", t.Goodsid).Scan(&t.Goodsid,
+	conn := mysql.GetMysqlDB()
+	err := conn.QueryRow("SELECT * FROM goods where goodsid = ?", t.Goodsid).Scan(&t.Goodsid,
 		&t.Goodsname,
 		&t.Type,
 		&t.Source,
@@ -59,7 +60,8 @@ func (t *Goods) QueryByKey() error {
 }
 
 func (t *Goods) Insert() error {
-	rs, err := MysqlDb.Exec("INSERT INTO userinfo(goodsid,goodsname,type,source,url,imgurl,brand,status,date,time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+	conn := mysql.GetMysqlDB()
+	rs, err := conn.Exec("INSERT INTO userinfo(goodsid,goodsname,type,source,url,imgurl,brand,status,date,time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 		t.Goodsid, t.Goodsname, t.Type, t.Source, t.Url, t.Imgurl, t.Brand, t.Status, t.Date, t.Time)
 
 	if err != nil {
@@ -75,8 +77,8 @@ func (t *Goods) Insert() error {
 
 func (t *Goods) QueryByStatus() ([]Goods, error) {
 	goodlist := []Goods{}
-
-	stmt, err := MysqlDb.Prepare("SELECT * FROM goods where status = ?")
+	conn := mysql.GetMysqlDB()
+	stmt, err := conn.Prepare("SELECT * FROM goods where status = ?")
 	if err != nil {
 		return nil, errors.New("Connection to mysql failed!")
 	}

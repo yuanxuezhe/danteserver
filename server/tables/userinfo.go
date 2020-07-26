@@ -1,10 +1,10 @@
 package tables
 
 import (
-	. "danteserver/server/util/pool"
 	"database/sql"
 	"errors"
 	"fmt"
+	"gitee.com/yuanxuezhe/dante/db/mysql"
 	"log"
 	"runtime"
 )
@@ -21,7 +21,8 @@ type Userinfo struct {
 }
 
 func (t *Userinfo) QueryByKey() error {
-	err := MysqlDb.QueryRow("SELECT * FROM userinfo where userid = ?", t.Userid).Scan(&t.Userid,
+	conn := mysql.GetMysqlDB()
+	err := conn.QueryRow("SELECT * FROM userinfo where userid = ?", t.Userid).Scan(&t.Userid,
 		&t.Username,
 		&t.Passwd,
 		&t.Sex,
@@ -44,7 +45,8 @@ func (t *Userinfo) QueryByKey() error {
 	return nil
 }
 func (t *Userinfo) Insert() error {
-	rs, err := MysqlDb.Exec("INSERT INTO userinfo(userid,username,passwd,sex,phone,email,status,registerdate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+	conn := mysql.GetMysqlDB()
+	rs, err := conn.Exec("INSERT INTO userinfo(userid,username,passwd,sex,phone,email,status,registerdate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 		t.Userid, t.Username, t.Passwd, t.Sex, t.Phone, t.Email, t.Status, t.Registerdate)
 
 	if err != nil {
@@ -90,7 +92,8 @@ func (t *Userinfo) Insert() error {
 
 // 校验用户是否存在,若存在返回用户信息
 func (t *Userinfo) CheckAccountExist() (userinfo *Userinfo, err error) {
-	stmt, err := MysqlDb.Prepare("SELECT * FROM userinfo where (userid = ? or phone = ? or email = ?) and passwd = ?")
+	conn := mysql.GetMysqlDB()
+	stmt, err := conn.Prepare("SELECT * FROM userinfo where (userid = ? or phone = ? or email = ?) and passwd = ?")
 	if err != nil {
 		return nil, errors.New("Connection to mysql failed!")
 	}
@@ -122,7 +125,8 @@ func (t *Userinfo) CheckAccountExist() (userinfo *Userinfo, err error) {
 }
 
 func (t *Userinfo) CheckAvailable_Phone() error {
-	rows, err := MysqlDb.Query("SELECT * FROM userinfo where phone = ?", t.Phone)
+	conn := mysql.GetMysqlDB()
+	rows, err := conn.Query("SELECT * FROM userinfo where phone = ?", t.Phone)
 	if err != nil {
 		return err
 	}
@@ -136,8 +140,8 @@ func (t *Userinfo) CheckAvailable_Phone() error {
 }
 
 func (t *Userinfo) CheckAvailable_Email() error {
-
-	rows, err := MysqlDb.Query("SELECT * FROM userinfo where email = ?", t.Email)
+	conn := mysql.GetMysqlDB()
+	rows, err := conn.Query("SELECT * FROM userinfo where email = ?", t.Email)
 	if err != nil {
 		return err
 	}
@@ -147,4 +151,42 @@ func (t *Userinfo) CheckAvailable_Email() error {
 		return errors.New("phone num has been used!")
 	}
 	return nil
+}
+
+func (t *Userinfo) Example() (userinfo *Userinfo, err error) {
+	conn, err := sql.Open("mysql", "root:1@tcp(192.168.2.2:3306)/dante?parseTime=true")
+
+	stmt, err := conn.Prepare("SELECT * FROM userinfo where (userid = ? or phone = ? or email = ?) and passwd = ?")
+	if err != nil {
+		return nil, errors.New("Connection to mysql failed!")
+	}
+	defer stmt.Close()
+	rows, err := stmt.Query(t.Userid, t.Phone, t.Email, t.Passwd)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	if rows.Next() {
+		err = rows.Scan(&t.Userid,
+			&t.Username,
+			&t.Passwd,
+			&t.Sex,
+			&t.Phone,
+			&t.Email,
+			&t.Status,
+			&t.Registerdate)
+
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		return nil, errors.New("Login failed! Userinfo not exists or passwd is wrong!")
+	}
+
+	return t, nil
+}
+
+func Example1() (i int, err error) {
+	return 1, nil
 }

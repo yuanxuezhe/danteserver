@@ -5,7 +5,6 @@ import (
 	"danteserver/server/modules/goods"
 	"danteserver/server/modules/login"
 	"danteserver/server/modules/register"
-	_ "danteserver/server/util/pool"
 
 	"gitee.com/yuanxuezhe/dante"
 	_ "gitee.com/yuanxuezhe/dante/conf"
