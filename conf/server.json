@@ -3,7 +3,8 @@
     "RegisterProtocol": "tcp",
     "RegisterCentor": "192.168.2.3:9101",
     "Log": {
-        "LogLevel": "release",
+        "LogLevel": "debug",
+        "PrintLevel": "debug",
         "LogPath": "user",
         "Console": true
     },
