@@ -1,6 +1,7 @@
 package sqlbase
 
 import (
+	"danteserver/server/pool"
 	"database/sql"
 	"fmt"
 	"gitee.com/yuanxuezhe/dante/comm"
@@ -10,11 +11,7 @@ import (
 
 func NewDB() (*Dbhandle, error) {
 	handle := &Dbhandle{}
-	var err error
-	handle.conn, err = sql.Open("mysql", "root:1@tcp(192.168.2.2:3306)/dante?parseTime=true")
-	if err != nil {
-		return nil, err
-	}
+	handle.conn = pool.SqlPool.Get().(*sql.DB)
 	return handle, nil
 }
 

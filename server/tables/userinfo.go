@@ -1,10 +1,10 @@
 package tables
 
 import (
+	"danteserver/server/pool"
 	"database/sql"
 	"errors"
 	"fmt"
-	"gitee.com/yuanxuezhe/dante/db/mysql"
 	"log"
 	"runtime"
 )
@@ -21,7 +21,7 @@ type Userinfo struct {
 }
 
 func (t *Userinfo) QueryByKey() error {
-	conn := mysql.GetMysqlDB()
+	conn := pool.SqlPool.Get().(*sql.DB)
 	err := conn.QueryRow("SELECT * FROM userinfo where userid = ?", t.Userid).Scan(&t.Userid,
 		&t.Username,
 		&t.Passwd,
@@ -45,7 +45,7 @@ func (t *Userinfo) QueryByKey() error {
 	return nil
 }
 func (t *Userinfo) Insert() error {
-	conn := mysql.GetMysqlDB()
+	conn := pool.SqlPool.Get().(*sql.DB)
 	rs, err := conn.Exec("INSERT INTO userinfo(userid,username,passwd,sex,phone,email,status,registerdate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 		t.Userid, t.Username, t.Passwd, t.Sex, t.Phone, t.Email, t.Status, t.Registerdate)
 
@@ -92,7 +92,7 @@ func (t *Userinfo) Insert() error {
 
 // 校验用户是否存在,若存在返回用户信息
 func (t *Userinfo) CheckAccountExist() (userinfo *Userinfo, err error) {
-	conn := mysql.GetMysqlDB()
+	conn := pool.SqlPool.Get().(*sql.DB)
 	stmt, err := conn.Prepare("SELECT * FROM userinfo where (userid = ? or phone = ? or email = ?) and passwd = ?")
 	if err != nil {
 		return nil, errors.New("Connection to mysql failed!")
@@ -125,7 +125,7 @@ func (t *Userinfo) CheckAccountExist() (userinfo *Userinfo, err error) {
 }
 
 func (t *Userinfo) CheckAvailable_Phone() error {
-	conn := mysql.GetMysqlDB()
+	conn := pool.SqlPool.Get().(*sql.DB)
 	rows, err := conn.Query("SELECT * FROM userinfo where phone = ?", t.Phone)
 	if err != nil {
 		return err
@@ -140,7 +140,7 @@ func (t *Userinfo) CheckAvailable_Phone() error {
 }
 
 func (t *Userinfo) CheckAvailable_Email() error {
-	conn := mysql.GetMysqlDB()
+	conn := pool.SqlPool.Get().(*sql.DB)
 	rows, err := conn.Query("SELECT * FROM userinfo where email = ?", t.Email)
 	if err != nil {
 		return err

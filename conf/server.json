@@ -8,7 +8,7 @@
         "LogPath": "user",
         "Console": true
     },
-	"Module":{
+	  "Module":{
         "Gateway":[
                     {
                         "Id":"Gateway01",
@@ -57,20 +57,16 @@
             }
         ]
     },
-    "Mysql": [
-        {
-            "Id": "mysql01",
-            "Rule": "",
-            "Url": "root:1@tcp(192.168.2.2:3306)/dante?parseTime=true",
-            "MaxOpenConns":10,
-            "MaxIdleConns":10
+    "Pools": {
+        "Mysql": {
+            "Url": "root:1@tcp(173.82.232.141:53306)/dante?parseTime=true",
+            "MaxOpenConns": 10,
+            "MaxIdleConns": 10
         },
-        {
-            "Id": "mysql02",
-            "Rule": "",
-            "Url": "root:1@tcp(192.168.2.4:3306)/dante?parseTime=true",
-            "MaxOpenConns":10,
-            "MaxIdleConns":10
+        "Rabbitmq": {
+            "Url": "amqp://admin:admin@vpn.evdata.top:45672/dante",
+            "MaxOpenConns": 10,
+            "MaxIdleConns": 10
         }
-    ]
+    }
 }

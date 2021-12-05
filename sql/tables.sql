@@ -1,6 +1,6 @@
 use dante;
 
-drop table userinfo;
+drop table if exists userinfo;
 
 CREATE TABLE IF NOT EXISTS `userinfo`(
 `userid`    int NOT NULL,
@@ -16,7 +16,7 @@ PRIMARY KEY ( `userid` )
 insert into `userinfo` (`userid`,`username`,`passwd`,`sex`,`phone`,`email`,`status`,`registerdate`)
 values (1, 'woshinibaba', '1', 0,18664324256,'446968454@qq.com',0,'20200712');
 
-drop table goods;
+drop table if exists goods;
 CREATE TABLE IF NOT EXISTS `goods`(
     `goodsid`   BIGINT(20)  default 0       PRIMARY KEY COMMENT '编号',
     `goodsname`       VARCHAR(128) NOT NULL COMMENT '名称',
@@ -40,7 +40,7 @@ insert into `goods` (`goodsid`,`goodsname`,`type`,`source`,`url`,`imgurl`) value
 insert into `goods` (`goodsid`,`goodsname`,`type`,`source`,`url`,`imgurl`) values (9, 'goods09', 1, 0,'https://item.jd.com/100012545852.html','https://boweisou.oss-cn-shenzhen.aliyuncs.com/yy/images/2_1536049430.jpg');
 insert into `goods` (`goodsid`,`goodsname`,`type`,`source`,`url`,`imgurl`) values (10, 'goods10', 1, 0,'https://item.jd.com/100012545852.html','https://boweisou.oss-cn-shenzhen.aliyuncs.com/yy/images/911a7002e11608fb581fffcde05d5257.jpg');
 
-drop table goods_describ;
+drop table if exists goods_describ;
 CREATE TABLE IF NOT EXISTS `goods_describ`(
     `goodsid`   int  default 0              PRIMARY KEY COMMENT '编号',
     `describe` blob                        COMMENT '描述'
