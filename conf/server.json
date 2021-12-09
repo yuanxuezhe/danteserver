@@ -1,7 +1,7 @@
 {
     "Registermodules": "Register,Login,Gateway,Goods",
     "RegisterProtocol": "tcp",
-    "RegisterCentor": "192.168.2.3:9101",
+    "RegisterCentor": "172.28.216.45:9101",
     "Log": {
         "LogLevel": "debug",
         "PrintLevel": "debug",
@@ -13,8 +13,8 @@
                     {
                         "Id":"Gateway01",
                         "Settings":{
-                            "WSAddr":       "192.168.2.3:19001",
-                            "TCPAddr":      "192.168.2.3:9001",
+                            "WSAddr":       "172.28.216.45:19001",
+                            "TCPAddr":      "172.28.216.45:9001",
                             "MaxMsgLen":    4096,
                             "HTTPTimeout":  10,
                             "MaxConnNum" :  20000,
@@ -30,7 +30,7 @@
             {
                 "Id":"Register",
                 "Settings":{
-                    "TCPAddr":      "192.168.2.3:9101",
+                    "TCPAddr":      "172.28.216.45:9101",
                     "Registduring": 10,
                     "Register": false
                 }
@@ -40,7 +40,7 @@
             {
                 "Id":"Login01",
                 "Settings":{
-                    "TCPAddr":      "192.168.2.3:9201",
+                    "TCPAddr":      "172.28.216.45:9201",
                     "Registduring": 30,
                     "Register": true
                 }
@@ -50,7 +50,7 @@
             {
                 "Id":"Goods01",
                 "Settings":{
-                    "TCPAddr":      "192.168.2.3:9301",
+                    "TCPAddr":      "172.28.216.45:9301",
                     "Registduring": 30,
                     "Register": true
                 }
@@ -59,7 +59,7 @@
     },
     "Pools": {
         "Mysql": {
-            "Url": "root:1@tcp(173.82.232.141:53306)/dante?parseTime=true",
+            "Url": "root:1@tcp(172.28.216.45:53306)/dante?parseTime=true",
             "MaxOpenConns": 10,
             "MaxIdleConns": 10
         },
