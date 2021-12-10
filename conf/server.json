@@ -1,7 +1,7 @@
 {
     "Registermodules": "Register,Login,Gateway,Goods",
     "RegisterProtocol": "tcp",
-    "RegisterCentor": "172.28.216.45:9101",
+    "RegisterCentor": "127.0.0.1:9101",
     "Log": {
         "LogLevel": "debug",
         "PrintLevel": "debug",
@@ -13,8 +13,8 @@
                     {
                         "Id":"Gateway01",
                         "Settings":{
-                            "WSAddr":       "172.28.216.45:19001",
-                            "TCPAddr":      "172.28.216.45:9001",
+                            "WSAddr":       "127.0.0.1:19001",
+                            "TCPAddr":      "127.0.0.1:9001",
                             "MaxMsgLen":    4096,
                             "HTTPTimeout":  10,
                             "MaxConnNum" :  20000,
@@ -30,7 +30,7 @@
             {
                 "Id":"Register",
                 "Settings":{
-                    "TCPAddr":      "172.28.216.45:9101",
+                    "TCPAddr":      "127.0.0.1:9101",
                     "Registduring": 10,
                     "Register": false
                 }
@@ -40,7 +40,79 @@
             {
                 "Id":"Login01",
                 "Settings":{
-                    "TCPAddr":      "172.28.216.45:9201",
+                    "TCPAddr":      "127.0.0.1:9201",
+                    "Registduring": 30,
+                    "Register": true
+                }
+            },
+            {
+                "Id":"Login02",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9202",
+                    "Registduring": 30,
+                    "Register": true
+                }
+            },
+            {
+                "Id":"Login03",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9203",
+                    "Registduring": 30,
+                    "Register": true
+                }
+            },
+            {
+                "Id":"Login04",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9204",
+                    "Registduring": 30,
+                    "Register": true
+                }
+            },
+            {
+                "Id":"Login05",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9205",
+                    "Registduring": 30,
+                    "Register": true
+                }
+            },
+            {
+                "Id":"Login06",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9206",
+                    "Registduring": 30,
+                    "Register": true
+                }
+            },
+            {
+                "Id":"Login07",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9207",
+                    "Registduring": 30,
+                    "Register": true
+                }
+            },
+            {
+                "Id":"Login08",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9208",
+                    "Registduring": 30,
+                    "Register": true
+                }
+            },
+            {
+                "Id":"Login09",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9209",
+                    "Registduring": 30,
+                    "Register": true
+                }
+            },
+            {
+                "Id":"Login10",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9210",
                     "Registduring": 30,
                     "Register": true
                 }
@@ -50,7 +122,7 @@
             {
                 "Id":"Goods01",
                 "Settings":{
-                    "TCPAddr":      "172.28.216.45:9301",
+                    "TCPAddr":      "127.0.0.1:9301",
                     "Registduring": 30,
                     "Register": true
                 }
@@ -59,9 +131,9 @@
     },
     "Pools": {
         "Mysql": {
-            "Url": "root:1@tcp(172.28.216.45:53306)/dante?parseTime=true",
-            "MaxOpenConns": 10,
-            "MaxIdleConns": 10
+            "Url": "root:1@tcp(ys.evdata.top:53306)/dante?parseTime=true",
+            "MaxOpenConns": 100,
+            "MaxIdleConns": 100
         },
         "Rabbitmq": {
             "Url": "amqp://admin:admin@vpn.evdata.top:45672/dante",

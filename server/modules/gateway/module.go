@@ -3,6 +3,7 @@ package gateway
 import (
 	"encoding/json"
 	"errors"
+
 	"gitee.com/yuanxuezhe/dante/log"
 	"gitee.com/yuanxuezhe/dante/module"
 	basemodule "gitee.com/yuanxuezhe/dante/module/base"
@@ -53,7 +54,7 @@ reconnect:
 		times = times + 1
 		if times <= 10 {
 			//delete(g.ModlueConns, Addr)
-			log.Release("Reconnect %d times......", times)
+			log.LogPrint(log.LEVEL_RELEASE, "Reconnect %d times......", times)
 			goto reconnect
 		}
 		return nil, err

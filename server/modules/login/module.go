@@ -6,10 +6,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"sync"
+
 	"gitee.com/yuanxuezhe/dante/module"
 	"gitee.com/yuanxuezhe/dante/module/base"
 	. "gitee.com/yuanxuezhe/dante/msg"
-	"sync"
 )
 
 const (
@@ -103,7 +104,6 @@ func (m *LoginManage) CheckParams(Type int, userinfo *tables.Userinfo) error {
 func (m *LoginManage) ManageUserinfo(Type int, userinfo *tables.Userinfo) (err error) {
 	if Type == LOGIN_TYPE_REGISTER {
 		m.rw.Lock()
-		fmt.Println("lllllllllllllllllll1")
 		userinfo.Userid = snogenerator.NewUserid()
 		// 用户编号从1111开始
 		if userinfo.Userid < 11111 {

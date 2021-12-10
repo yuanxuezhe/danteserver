@@ -2,10 +2,11 @@ package register
 
 import (
 	"encoding/json"
+	"net"
+
 	"gitee.com/yuanxuezhe/dante/module"
 	base "gitee.com/yuanxuezhe/dante/module/base"
 	"gitee.com/yuanxuezhe/dante/module/register"
-	"net"
 )
 
 var NewModule = func() module.Module {
@@ -25,9 +26,7 @@ type Register struct {
 //var MapRegister map[string]base.Basemodule
 
 func (m *Register) init() {
-	//m.Modules = make(map[string]base.ModuleInfo, 50)
-	m.Modules = make(map[string]base.ModuleInfo, 50)
-	//MapRegister = make(map[string]base.Basemodule, 1000)
+	m.Modules = make(map[string][]base.ModuleInfo, 50)
 }
 
 func (m *Register) DoWork(buff []byte) ([]byte, error) {
@@ -39,7 +38,7 @@ func (m *Register) DoWork(buff []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	m.Modules[moduleInfo.ModuleId] = moduleInfo
+	m.Modules[moduleInfo.ModuleType] = append(m.Modules[moduleInfo.ModuleType], moduleInfo)
 
 	// 创建注册连接
 	m.RegisterBeats()
