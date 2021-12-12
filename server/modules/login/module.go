@@ -5,7 +5,6 @@ import (
 	"danteserver/server/util/snogenerator"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"sync"
 
 	"gitee.com/yuanxuezhe/dante/module"

@@ -3,7 +3,6 @@ package gateway
 import (
 	"encoding/json"
 	"errors"
-
 	"gitee.com/yuanxuezhe/dante/log"
 	"gitee.com/yuanxuezhe/dante/module"
 	basemodule "gitee.com/yuanxuezhe/dante/module/base"
@@ -28,23 +27,18 @@ func (g *Gateway) DoWork(buff []byte) ([]byte, error) {
 	var dconn commconn.CommConn
 	var err error
 
-	module := "Error"
-
 	msg := &Msg{}
 	err = json.Unmarshal(buff, msg)
 	if err != nil {
 		return nil, errors.New("Error data format：" + err.Error())
 	}
-	module = msg.Id
-	if module == "Heart" {
-		return ResultPackege(module, module, 0, "Heart beats!", nil), nil
+	if msg.Id == "Heart" {
+		return ResultPackege(msg.Id, msg.Id, 0, "Heart beats!", nil), nil
 	}
-
 	times := 0
 
 reconnect:
-
-	dconn, err = g.GetModuleConn(module)
+	dconn, err = g.GetModuleConn(msg.Id)
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +48,7 @@ reconnect:
 		times = times + 1
 		if times <= 10 {
 			//delete(g.ModlueConns, Addr)
-			log.LogPrint(log.LEVEL_RELEASE, "Reconnect %d times......", times)
+			log.LogPrint(log.LEVEL_RELEASE, "[%-10s]Reconnect %d times......", g.ModuleId, times)
 			goto reconnect
 		}
 		return nil, err

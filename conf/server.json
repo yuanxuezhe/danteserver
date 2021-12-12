@@ -116,6 +116,86 @@
                     "Registduring": 30,
                     "Register": true
                 }
+            },
+            {
+                "Id":"Login11",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9211",
+                    "Registduring": 30,
+                    "Register": true
+                }
+            },
+            {
+                "Id":"Login12",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9212",
+                    "Registduring": 30,
+                    "Register": true
+                }
+            },
+            {
+                "Id":"Login13",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9213",
+                    "Registduring": 30,
+                    "Register": true
+                }
+            },
+            {
+                "Id":"Login14",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9214",
+                    "Registduring": 30,
+                    "Register": true
+                }
+            },
+            {
+                "Id":"Login15",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9215",
+                    "Registduring": 30,
+                    "Register": true
+                }
+            },
+            {
+                "Id":"Login16",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9216",
+                    "Registduring": 30,
+                    "Register": true
+                }
+            },
+            {
+                "Id":"Login17",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9217",
+                    "Registduring": 30,
+                    "Register": true
+                }
+            },
+            {
+                "Id":"Login18",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9218",
+                    "Registduring": 30,
+                    "Register": true
+                }
+            },
+            {
+                "Id":"Login19",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9219",
+                    "Registduring": 30,
+                    "Register": true
+                }
+            },
+            {
+                "Id":"Login20",
+                "Settings":{
+                    "TCPAddr":      "127.0.0.1:9220",
+                    "Registduring": 30,
+                    "Register": true
+                }
             }
         ],
         "Goods":[
@@ -131,7 +211,7 @@
     },
     "Pools": {
         "Mysql": {
-            "Url": "root:1@tcp(ys.evdata.top:53306)/dante?parseTime=true",
+            "Url": "root:1@tcp(192.168.2.2:3306)/dante?parseTime=true",
             "MaxOpenConns": 100,
             "MaxIdleConns": 100
         },

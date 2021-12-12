@@ -23,10 +23,9 @@ type Register struct {
 	register.BaseRegister
 }
 
-//var MapRegister map[string]base.Basemodule
-
 func (m *Register) init() {
-	m.Modules = make(map[string][]base.ModuleInfo, 50)
+	m.Modules.SetCapacity(50)
+	m.Modules.SetDescribe(m.ModuleId + "  " + "m.Modules  ")
 }
 
 func (m *Register) DoWork(buff []byte) ([]byte, error) {
@@ -34,14 +33,20 @@ func (m *Register) DoWork(buff []byte) ([]byte, error) {
 	// 解析消息体
 	moduleInfo := base.ModuleInfo{}
 	err = json.Unmarshal(buff, &moduleInfo) //转换成JSON返回的是byte[]
+
 	if err != nil {
 		return nil, err
 	}
-
-	m.Modules[moduleInfo.ModuleType] = append(m.Modules[moduleInfo.ModuleType], moduleInfo)
-
+	var moduleInfos []base.ModuleInfo
+	v, err := m.Modules.Get(moduleInfo.ModuleType)
+	if err == nil {
+		moduleInfos = v.([]base.ModuleInfo)
+	}
+	m.Modules.Set(moduleInfo.ModuleType, append(moduleInfos, moduleInfo))
 	// 创建注册连接
-	m.RegisterBeats()
-
+	err = m.RegisterBeats()
+	if err == nil {
+		return nil, err
+	}
 	return []byte("Register successful:" + string(buff)), nil
 }
